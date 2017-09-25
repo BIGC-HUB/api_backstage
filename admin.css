@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    background: url(img/note.png);
+    color: #222;
+}
+
+#top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    background: rgba(255,0,0,0.6);
+    color: white;
+}
+
+#classify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    min-height: 15rem;
+}
+#classify tag {
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    border: 1px solid transparent;
+    border-radius: .125rem;
+    cursor: pointer;
+}
+
+#classify tag:hover {
+    color: rgba(255,0,0,0.6);
+    background-color: rgba(230,231,236,0.66);
+    border-color: #E6E7EC;
+}
+
+@media (min-width: 1000px) {
+    #classify {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
