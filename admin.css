@@ -17,7 +17,12 @@ page {
     flex-wrap: wrap;
 }
 
+box, tag, .btn {
+    cursor: pointer;
+}
+
 #top {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,13 +30,16 @@ page {
     background: rgba(255,0,0,0.6);
     color: white;
 }
+#top .btn-home {
+    left: 1rem;
+    position: absolute;
+}
 
 #classify tag {
     margin: 1rem 0;
     padding: 1rem 2rem;
     border: 1px solid transparent;
     border-radius: .125rem;
-    cursor: pointer;
 }
 #classify tag:hover {
     color: rgba(255,0,0,0.6);
@@ -65,7 +73,7 @@ box .name {
     border-radius: .25rem;
     width: 100%;
     text-align: center;
-    word-break: keep-all;
+    word-break: break-word;
     background: rgba(255,0,0,0.6);
 }
 box .money {
@@ -80,5 +88,8 @@ box .time {
     #classify {
         width: 80%;
         margin: 0 auto;
+    }
+    box {
+        width: 33.333333%
     }
 }

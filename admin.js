@@ -58,7 +58,11 @@ $('#classify').on('click', 'tag', function() {
         let data = JSON.parse(res)
         let arr = data[0].inteactivity
         initMore(arr)
+        $('page').hide()
         $('#more').fadeIn()
-        $('#classify').hide()
     })
+})
+$('#top .btn-home').on('click', function(){
+    $('page').hide()
+    $('#classify').fadeIn()
 })
