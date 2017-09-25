@@ -1,8 +1,8 @@
 // 回调函数
-let get = function(url) {
+const get = function(url) {
     return new Promise(function(ok) {
         Sea.Ajax({
-            url: 'http://192.168.1.126:1337/activity/classify',
+            url: url,
             method: "get",
         }).then(res => {
             ok(res)
@@ -12,18 +12,12 @@ let get = function(url) {
 
 let url = ''
 // 查询
-// url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=骑马'
+// url =
 // 添加
 // url = 'http://192.168.1.126:1337/activity/classify/add?classify_name=对象'
 // 删除
 // url = 'http://192.168.1.126:1337/activity/classify/delete?classify_name=对象'
 // 获取
-
-let bindEvent = function() {
-    $('#classify').on('click', 'tag', function() {
-        log(this)
-    })
-}
 
 let initClass = function(url) {
     get(url).then(res => {
@@ -35,10 +29,36 @@ let initClass = function(url) {
         $('#classify').html(html)
     })
 }
+
+let initMore = function(arr) {
+    let html = ''
+    for(let i = 0; i < arr.length; i++) {
+        let e = arr[i]
+        html += `<box data-id="${e.id}">
+            <img src="${e.info_img}">
+            <text class="name"> ${e.info}</text>
+            <text class="money"> ${e.price} </text>
+            <text class="time"> ${e.time} </text>
+        </box>`.html()
+    }
+    $('#more').html(html)
+}
+
 let __main = function() {
     // 分类
     initClass('http://192.168.1.126:1337/activity/classify')
-    // 事件
-    bindEvent()
 }
 __main()
+
+
+$('#classify').on('click', 'tag', function() {
+    let name = this.dataset.name
+    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+    get(url).then(res => {
+        let data = JSON.parse(res)
+        let arr = data[0].inteactivity
+        initMore(arr)
+        $('#more').fadeIn()
+        $('#classify').hide()
+    })
+})
