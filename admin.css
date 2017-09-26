@@ -29,7 +29,7 @@ box, tag, .btn {
     background: rgba(255,0,0,0.6);
     color: white;
 }
-#top .btn-home {
+#top .btn-back {
     left: 1rem;
     position: absolute;
 }
@@ -89,15 +89,16 @@ box, tag, .btn {
     justify-content: center;
     align-items: center;
     width: 100%;
+    font-size: 1.1rem;
 }
 #edit val input {
     border-radius: .25rem;
     border-style: none;
     outline-style: none;
     padding: 1rem;
-    font-size: 1.23rem;
     background-color: transparent;
     width: 70%;
+    font-size: 1.1rem;
 }
 #edit val input:hover {
     background: rgba(214, 219, 223, 0.2);
@@ -110,7 +111,6 @@ box, tag, .btn {
     width: 20%;
     color: #8590A6;
     text-align: right;
-    font-size: 1.23rem;
 }
 
 @media (min-width: 1000px) {

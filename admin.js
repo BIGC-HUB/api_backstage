@@ -1,3 +1,4 @@
+const back = []
 // 回调函数
 const get = function(url) {
     return new Promise(function(ok) {
@@ -47,11 +48,15 @@ let initMore = function(arr) {
 let initEdit = function(obj) {
     let html = ''
     for (let key in obj) {
-        html += `
-        <val>
-            <text>${key}</text>
-            <input value="${obj[key]}">
-        </val>`.html()
+        if (typeof obj[key] === 'object') {
+
+        } else {
+            html += `
+            <val>
+                <text>${key}：</text>
+                <input value="${obj[key]}">
+            </val>`.html()
+        }
     }
     $('#edit').html(html)
 }
@@ -72,6 +77,7 @@ $('#classify').on('click', 'tag', function() {
         initMore(arr)
         $('page').hide()
         $('#more').fadeIn()
+        back.push('#classify')
     })
 })
 $('#more').on('click', 'box', function() {
@@ -82,9 +88,13 @@ $('#more').on('click', 'box', function() {
         initEdit(data)
         $('page').hide()
         $('#edit').fadeIn()
+        back.push('#more')
     })
 })
-$('#top .btn-home').on('click', function(){
-    $('page').hide()
-    $('#classify').fadeIn()
+$('#top .btn-back').on('click', function(){
+    if (back.length) {
+        let last = back.splice(-1, 1)[0]
+        $('page').hide()
+        $(last).fadeIn()
+    }
 })
