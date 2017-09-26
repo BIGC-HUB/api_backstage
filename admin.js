@@ -46,19 +46,27 @@ let initMore = function(arr) {
 }
 
 let initEdit = function(obj) {
+    let type = ''
     let html = ''
     for (let key in obj) {
         if (typeof obj[key] === 'object') {
-
+            if (key === '_type') {
+                let arr = obj[key]
+                for (let e of arr) {
+                    type+= `
+                    <type>${e.classify_name}</type>
+                    `.html()
+                }
+            }
         } else {
             html += `
             <val>
                 <text>${key}：</text>
-                <input value="${obj[key]}">
+                <input value="${obj[key]}" >
             </val>`.html()
         }
     }
-    $('#edit').html(html)
+    $('#edit').html(type + html)
 }
 
 let __main = function() {

@@ -112,6 +112,12 @@ box, tag, .btn {
     color: #8590A6;
     text-align: right;
 }
+#edit type {
+    margin: 1rem;
+    padding: .3rem;
+    border-radius: .25rem;
+    background: #abb9d6;
+}
 
 @media (min-width: 1000px) {
     #classify {
