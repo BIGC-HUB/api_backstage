@@ -44,6 +44,18 @@ let initMore = function(arr) {
     $('#more').html(html)
 }
 
+let initEdit = function(obj) {
+    let html = ''
+    for (let key in obj) {
+        html += `
+        <val>
+            <text>${key}</text>
+            <input value="${obj[key]}">
+        </val>`.html()
+    }
+    $('#edit').html(html)
+}
+
 let __main = function() {
     // 分类
     initClass('http://192.168.1.126:1337/activity/classify')
@@ -60,6 +72,16 @@ $('#classify').on('click', 'tag', function() {
         initMore(arr)
         $('page').hide()
         $('#more').fadeIn()
+    })
+})
+$('#more').on('click', 'box', function() {
+    let id = this.dataset.id
+    let url = 'http://192.168.1.126:1337/activity/findone?act_id=' + id
+    get(url).then(res => {
+        let data = JSON.parse(res)
+        initEdit(data)
+        $('page').hide()
+        $('#edit').fadeIn()
     })
 })
 $('#top .btn-home').on('click', function(){
