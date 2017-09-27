@@ -9,6 +9,83 @@ img {
     vertical-align: top;
     border-radius: .25rem;
 }
+input {
+    font-size: 1rem;
+}
+/* Button */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border-radius: .25rem;
+    border: 1px solid transparent;
+}
+.btn-blue {
+    color: #FFF;
+    background-color: #037DD8;
+    border-color: #0771C1;
+}
+.btn-blue:hover {
+    background-color: #0771C1;
+    border-color: #0363AC;
+}
+.btn-blue-o {
+    color: #0771C1;
+}
+.btn-blue-o:hover {
+    color: #115588;
+}
+.btn-white {
+    color: #8590A6;
+    background-color: #FFF;
+    border-color: #9DA3A6;
+}
+.btn-white:hover {
+    color: #666;
+    background-color: #F5F6F9;
+}
+.btn-white-o {
+    color: #8590A6;
+}
+.btn-white-o:hover {
+    color: #666;
+}
+.btn-red-o {
+    color: #D43F3A;
+}
+.btn-red-o:hover {
+    color: #9c2c28;
+}
+.btn-red {
+    color: #FFF;
+    background-color: #D9534F;
+    border-color: #D43F3A;
+}
+.btn-red:hover {
+    background-color: #DA4242;
+    border-color: #DA4242;
+}
+.btn-black {
+    color: #FFF;
+    background-color: #262626;
+    border-color: #262626;
+}
+.btn-black:hover {
+    background-color: #333;
+    border-color: #333;
+}
+.btn-black-o {
+    color: #262626;
+}
+.btn-black-o:hover {
+    color: #333;
+}
+.btn-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 page {
     display: flex;
@@ -83,6 +160,23 @@ box, tag, .btn {
     bottom: 1rem;
     right: 1rem;
 }
+#more .btn {
+    padding: .3rem 1rem;
+    margin: 1rem;
+}
+#more .btn-box input {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: right;
+    border: 0;
+    padding: 0;
+    outline: 0;
+    background: transparent;
+    width: 2rem;
+}
+#more .btn-box text {
+    height: 1.44rem;
+}
 
 #edit val {
     display: flex;
@@ -98,7 +192,6 @@ box, tag, .btn {
     padding: 1rem;
     background-color: transparent;
     width: 70%;
-    font-size: 1.1rem;
 }
 #edit val input:hover {
     background: rgba(214, 219, 223, 0.2);

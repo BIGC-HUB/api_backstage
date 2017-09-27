@@ -31,7 +31,8 @@ let initClass = function(url) {
     })
 }
 
-let initMore = function(arr) {
+let initMore = function(data) {
+    let arr = data.activitys
     let html = ''
     for(let i = 0; i < arr.length; i++) {
         let e = arr[i]
@@ -42,6 +43,13 @@ let initMore = function(arr) {
             <text class="time"> ${e.time} </text>
         </box>`.html()
     }
+    html += `
+    <div class="btn-box">
+        <button class="btn-next btn btn-red" type="button" name="button">下一页</button>
+        <input class="now-page" data-max="${data.total}" type="phone" maxlength="3" value="${data.now}">
+        <text>/${data.total}页</text>
+        <button class="btn-jump btn btn-blue" type="button" name="button">跳转</button>
+    </div>`.html()
     $('#more').html(html)
 }
 
@@ -81,10 +89,10 @@ $('#classify').on('click', 'tag', function() {
     let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
     get(url).then(res => {
         let data = JSON.parse(res)
-        let arr = data[0].inteactivity
-        initMore(arr)
+        initMore(data)
         $('page').hide()
         $('#more').fadeIn()
+        $('#more')[0].dataset.classify_name = name
         back.push('#classify')
     })
 })
@@ -105,4 +113,40 @@ $('#top .btn-back').on('click', function(){
         $('page').hide()
         $(last).fadeIn()
     }
+})
+$('#more').on('blur', '.now-page', function() {
+    let n = Number(this.value)
+    let max = Number(this.dataset.max)
+    if (n > max) {
+        this.value = max
+    }
+    if (n < 0) {
+        this.value = 0
+    }
+})
+$('#more').on('click', '.btn-next', function() {
+    let input = $('#more .now-page')[0]
+    let max  = Number(input.dataset.max)
+    let next = Number(input.value) + 1
+    let name = $('#more')[0].dataset.classify_name
+    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+    if (next <= max) {
+        url += '&page=' + next
+        get(url).then(res => {
+            let data = JSON.parse(res)
+            initMore(data)
+        })
+    }
+})
+$('#more').on('click', '.btn-jump', function() {
+    let input = $('#more .now-page')[0]
+    let max = Number(input.dataset.max)
+    let now = Number(input.value)
+    let name = $('#more')[0].dataset.classify_name
+    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+    url += '&page=' + now
+    get(url).then(res => {
+        let data = JSON.parse(res)
+        initMore(data)
+    })
 })
