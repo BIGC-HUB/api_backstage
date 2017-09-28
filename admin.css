@@ -93,7 +93,7 @@ page {
     justify-content: center;
     flex-wrap: wrap;
 }
-box, tag, .btn {
+box, tag, .btn, .fa-close {
     cursor: pointer;
 }
 
@@ -168,14 +168,13 @@ box, tag, .btn {
     font-size: 1.1rem;
     font-weight: bold;
     text-align: right;
-    border: 0;
-    padding: 0;
     outline: 0;
     background: transparent;
     width: 2rem;
+    border-radius: .45rem;
 }
 #more .btn-box text {
-    height: 1.44rem;
+    height: 1.5rem;
 }
 
 #edit val {
@@ -205,11 +204,21 @@ box, tag, .btn {
     color: #8590A6;
     text-align: right;
 }
-#edit type {
+#edit .type-box {
+    position: relative;
     margin: 1rem;
     padding: .3rem;
+    padding-right: 1.2rem;
     border-radius: .25rem;
     background: #abb9d6;
+}
+#edit .type-add {
+    width: 5rem;
+}
+#edit .type-box i {
+    position: absolute;
+    top: .1rem;
+    right: .1rem;
 }
 
 @media (min-width: 1000px) {

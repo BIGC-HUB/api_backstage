@@ -11,7 +11,6 @@ const get = function(url) {
     })
 }
 
-let url = ''
 // 查询
 // url =
 // 添加
@@ -60,9 +59,15 @@ let initEdit = function(obj) {
         if (typeof obj[key] === 'object') {
             if (key === '_type') {
                 let arr = obj[key]
+                Edit.types = arr.length
+                Edit.typeArr = []
                 for (let e of arr) {
+                    Edit.typeArr.push(e.classify_name)
                     type+= `
-                    <type>${e.classify_name}</type>
+                    <div class="type-box">
+                        <type>${e.classify_name}</type>
+                        <i data-name="${e.classify_name}" data-id="${obj.id}" class="fa fa-close fa-1x"></i>
+                    </div>
                     `.html()
                 }
             }
@@ -70,83 +75,150 @@ let initEdit = function(obj) {
             html += `
             <val>
                 <text>${key}：</text>
-                <input value="${obj[key]}" >
+                <input value="${obj[key]}" readonly>
             </val>`.html()
         }
     }
+    type += `<input data-id="${obj.id}" class="type-add" type="text" placeholder="回车保存">`
     $('#edit').html(type + html)
 }
 
-let __main = function() {
-    // 分类
-    initClass('http://192.168.1.126:1337/activity/classify')
-}
-__main()
-
-
-$('#classify').on('click', 'tag', function() {
-    let name = this.dataset.name
-    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
-    get(url).then(res => {
-        let data = JSON.parse(res)
-        initMore(data)
-        $('page').hide()
-        $('#more').fadeIn()
-        $('#more')[0].dataset.classify_name = name
-        back.push('#classify')
+let bindShow = function() {
+    $('#classify').on('click', 'tag', function() {
+        let name = this.dataset.name
+        let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+        get(url).then(res => {
+            let data = JSON.parse(res)
+            initMore(data)
+            $('page').hide()
+            $('#more').fadeIn()
+            $('#more')[0].dataset.classify_name = name
+            back.push('#classify')
+        })
     })
-})
-$('#more').on('click', 'box', function() {
-    let id = this.dataset.id
-    let url = 'http://192.168.1.126:1337/activity/findone?act_id=' + id
-    get(url).then(res => {
-        let data = JSON.parse(res)
-        initEdit(data)
-        $('page').hide()
-        $('#edit').fadeIn()
-        back.push('#more')
+    $('#more').on('click', 'box', function() {
+        let id = this.dataset.id
+        let url = 'http://192.168.1.126:1337/activity/findone?act_id=' + id
+        get(url).then(res => {
+            let data = JSON.parse(res)
+            initEdit(data)
+            $('page').hide()
+            $('#edit').fadeIn()
+            back.push('#more')
+        })
     })
-})
-$('#top .btn-back').on('click', function(){
-    if (back.length) {
-        let last = back.splice(-1, 1)[0]
-        $('page').hide()
-        $(last).fadeIn()
-    }
-})
-$('#more').on('blur', '.now-page', function() {
-    let n = Number(this.value)
-    let max = Number(this.dataset.max)
-    if (n > max) {
-        this.value = max
-    }
-    if (n < 0) {
-        this.value = 0
-    }
-})
-$('#more').on('click', '.btn-next', function() {
-    let input = $('#more .now-page')[0]
-    let max  = Number(input.dataset.max)
-    let next = Number(input.value) + 1
-    let name = $('#more')[0].dataset.classify_name
-    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
-    if (next <= max) {
-        url += '&page=' + next
+    $('#top .btn-back').on('click', function(){
+        if (back.length) {
+            let last = back.splice(-1, 1)[0]
+            $('page').hide()
+            $(last).fadeIn()
+        }
+    })
+    $('#more').on('blur', '.now-page', function() {
+        let n = Number(this.value)
+        let max = Number(this.dataset.max)
+        if (n > max) {
+            this.value = max
+        }
+        if (n < 0) {
+            this.value = 0
+        }
+    })
+    $('#more').on('click', '.btn-next', function() {
+        let input = $('#more .now-page')[0]
+        let max  = Number(input.dataset.max)
+        let next = Number(input.value) + 1
+        let name = $('#more')[0].dataset.classify_name
+        let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+        if (next <= max) {
+            url += '&page=' + next
+            get(url).then(res => {
+                let data = JSON.parse(res)
+                initMore(data)
+            })
+        }
+    })
+    $('#more').on('click', '.btn-jump', function() {
+        let input = $('#more .now-page')[0]
+        let max = Number(input.dataset.max)
+        let now = Number(input.value)
+        let name = $('#more')[0].dataset.classify_name
+        let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
+        url += '&page=' + now
         get(url).then(res => {
             let data = JSON.parse(res)
             initMore(data)
         })
-    }
-})
-$('#more').on('click', '.btn-jump', function() {
-    let input = $('#more .now-page')[0]
-    let max = Number(input.dataset.max)
-    let now = Number(input.value)
-    let name = $('#more')[0].dataset.classify_name
-    let url = 'http://192.168.1.126:1337/activity/classify_find?classify_name=' + name
-    url += '&page=' + now
-    get(url).then(res => {
-        let data = JSON.parse(res)
-        initMore(data)
     })
-})
+}
+
+let bindEdit = function() {
+    $('#edit').on('click', '.fa-close', function() {
+        let {name, id} = this.dataset
+        if (Edit.types > 1) {
+            Sea.Ajax({
+                method: "get",
+                url: "http://192.168.1.126:1337/activity/removelabels",
+                search: {
+                    "classify_name": name,
+                    "act_id": id,
+                },
+            }).then(res => {
+                let data = JSON.parse(res)
+                log(data)
+                if (Number(data.code) === 20000) {
+                    Edit.types--
+                    Edit.typeArr.splice(Edit.typeArr.indexOf(name), 1)
+                    this.parentElement.remove()
+                }
+            })
+        } else {
+            alert("至少保留一个标签")
+        }
+    })
+    $('#edit').on('keydown', '.type-add', function(e) {
+        let {id} = this.dataset
+        let name = this.value
+        if (e.keyCode === 13) {
+            if (!Edit.typeArr.includes(name)) {
+                Sea.Ajax({
+                    method: "get",
+                    url: "http://192.168.1.126:1337/activity/addlabels",
+                    search: {
+                        "classify_name": name,
+                        "act_id": id,
+                    },
+                }).then(res => {
+                    let data = JSON.parse(res)
+                    if (Number(data.code) === 20000) {
+                        this.value = ''
+                        Edit.types++
+                        Edit.typeArr.push(name)
+                        $('.type-add').before(`
+                            <div class="type-box">
+                                <type>${name}</type>
+                                <i data-name="${name}" data-id="${id}" class="fa fa-close fa-1x"></i>
+                            </div>`.html())
+                    } else {
+                        alert(data.msg)
+                    }
+                })
+            } else {
+                alert('标签已经有了')
+            }
+        }
+    })
+}
+
+const Edit = {
+    types: 0,
+    typeArr: [],
+}
+
+let __main = function() {
+    bindShow()
+    bindEdit()
+    // 分类
+    initClass('http://192.168.1.126:1337/activity/classify')
+}
+__main()

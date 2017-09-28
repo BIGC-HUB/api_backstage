@@ -50,6 +50,7 @@ class Sea {
     static Ajax(request) {
         let req = {
              url: request.url,
+             search: request.search || {},
              // data 传对象
              data: JSON.stringify(request.data) || null,
              method: (request.method || 'POST').toUpperCase(),
@@ -59,15 +60,26 @@ class Sea {
          }
          let r = new XMLHttpRequest()
          let promise = new Promise(function(success, fail) {
-             r.open(req.method, req.url, true)
+             // Search 查询
+             let arr = []
+             for (let k in req.search) {
+                 let s = [k ,req.search[k]].join('=')
+                 arr.push(s)
+             }
+             let url = req.url
+             if (arr.length) {
+                 url += '?' + arr.join('&')
+             }
+             // Ajax
+             r.open(req.method, url, true)
              r.setRequestHeader('Content-Type', req.contentType)
-             for (var key in req.header) {
+             for (let key in req.header) {
                  r.setRequestHeader(key, req.header[key])
              }
              r.onreadystatechange = function() {
                  if (r.readyState === 4) {
                      let res = r.response
-                     // 回调函数
+                     // Callback 回调函数
                      if (typeof req.callback === 'function') {
                          req.callback(res)
                      }
