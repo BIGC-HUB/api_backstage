@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background: url(img/note.png);
+    background: url(../img/note.png);
     color: #222;
 }
 img {
@@ -106,9 +106,18 @@ box, tag, .btn, .fa-close {
     background: rgba(255,0,0,0.6);
     color: white;
 }
-#top .btn-back {
-    left: 1rem;
+#top .btn {
+    height: 3rem;
     position: absolute;
+    border: 0;
+}
+#top .btn-back {
+    top: 0;
+    left: 1rem;
+}
+#top .btn-login {
+    top: 0;
+    right: 1rem;
 }
 
 #classify tag {
