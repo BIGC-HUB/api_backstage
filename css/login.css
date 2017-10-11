@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    background: #f9f9f9;
+    color: #666;
+}
+#login {
+    /*background: #f9f9f9;
+    color: #666;*/
+}
+#login .box {
+    margin: 0 auto;
+    width: 80%;
+    height: 30rem;
+    background: #FFF;
+}
+#login .regbox {
+    width: 332px;
+    padding: 30px 0;
+    line-height: 20px;
+    margin: 0 auto;
+}
+#login .input-box text {
+    display: block;
+    padding-bottom: 5px;
+    color: #333;
+    font-weight: normal;
+}
+#login .input-box input {
+    width: 100%;
+    line-height: 20px;
+    padding: 10px;
+}
+/*输入框 提示*/
+#login .input-box .prompt {
+    margin-top: 8px;
+    margin-bottom: 15px;
+    font-weight: lighter;
+}
+#login logo{
+    display: block;
+
+    margin: 0 auto;
+    margin-bottom: 40px;
+    width: 49px;
+    height: 48px;
+
+    background-image: url(https://account.xiaomi.com/static/res/28f08d0/account-static/respassport/acc-2014/img/milogo.png);
+    cursor: default;
+}
+#login k1 {
+    font-size: 30px;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.5;
+    display: block;
+    text-align: center;
+}
+#login button {
+    width: 330px;
+    height: 42px;
+    margin: 0 auto;
+    line-height: 42px;
+    text-align: center;
+    font-size: 14px;
+    display: block;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+
+    background-color: #ff6700;
+    margin-top: 15px;
+    border: 1px solid rgba(186,186,186,0.3);
+    color: #fff;
+}
